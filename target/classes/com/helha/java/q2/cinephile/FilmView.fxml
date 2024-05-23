@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import java.net.URL?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.helha.java.q2.cinephile.Views.FilmViewController">
+
+    <MenuBar style="-fx-background-color: #344D59;-fx-min-height: 30px;"
+    >
+        <!-- Menu "Fichier" -->
+        <Menu text="Compte" style="-fx-background-color: #137C8B;-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-end-margin: 10px " >
+            <MenuItem text="Se Connecter"/>
+        </Menu>
+
+        <!-- Menu "Édition" -->
+        <Menu text="Trier par Jour" style="-fx-background-color: #137C8B;-fx-background-radius: 10px; -fx-border-radius: 10px; ">
+            <MenuItem text="Lundi"/>
+            <MenuItem text="Mardi"/>
+            <MenuItem text="Mercredi"/>
+            <MenuItem text="Jeudi"/>
+            <MenuItem text="Vendredi"/>
+            <MenuItem text="Samedi"/>
+            <MenuItem text="Dimanche"/>
+        </Menu>
+    </MenuBar>
+
+    <ScrollPane fitToWidth="true" fitToHeight="true" >
+        <FlowPane fx:id="flowPane"
+                  xmlns="http://javafx.com/javafx"
+                  xmlns:fx="http://javafx.com/fxml"
+                  hgap="10" vgap="10"
+                  prefWidth="500"
+                  alignment="CENTER"
+                  VBox.vgrow="ALWAYS"
+                  style="-fx-padding: 10px;
+                  -fx-background-color: #B8CBD0;">
+        </FlowPane>
+    </ScrollPane>
+
+</VBox>

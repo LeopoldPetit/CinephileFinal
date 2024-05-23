@@ -1,0 +1,44 @@
+.label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+}
+
+.amount-label {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0076a3;
+}
+
+.buttonAccepted {
+    -fx-font-size: 14px;
+    -fx-padding: 8px 16px;
+    -fx-background-color: #206035;
+    -fx-text-fill: white;
+}
+.buttonRefused {
+    -fx-font-size: 14px;
+    -fx-padding: 8px 16px;
+    -fx-background-color: #90180b;
+    -fx-text-fill: white;
+}
+
+.buttonAccepted:hover {
+    -fx-background-color: #74b769;
+}
+.buttonRefused:hover {
+    -fx-background-color: #ad2f00;
+}
+
+.result-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: green;
+}
+
+.text-field {
+    -fx-font-size: 14px;
+    -fx-prompt-text-fill: #999999;
+    -fx-padding: 8px;
+    -fx-background-color: #f2f2f2;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px;
+}
