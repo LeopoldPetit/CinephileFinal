@@ -110,7 +110,7 @@ public class CheckoutViewController {
         int pmrCount = pmrComboBox.getValue() != null ? pmrComboBox.getValue() : 0;
 
         double totalPrice = (adultCount * adultPrice) + (childCount * childPrice) + (seniorCount * seniorPrice) + (pmrCount * pmrPrice);
-        ticketPriceLabel.setText(String.format("%.2f €", totalPrice));  // Assurez-vous d'utiliser "%.2f" pour formater correctement le prix
+        ticketPriceLabel.setText(String.valueOf(totalPrice));  // Assurez-vous d'utiliser "%.2f" pour formater correctement le prix
     }
     public void updateTotalPrice(Double prix) {
         ticketPriceLabel.setText(String.format("%.2f €", prix));

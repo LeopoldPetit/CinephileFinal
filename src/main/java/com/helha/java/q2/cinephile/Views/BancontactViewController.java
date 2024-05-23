@@ -55,7 +55,7 @@ public class BancontactViewController {
         Platform.runLater(() -> {
             if (montantLabel != null) {
                 prix=montant;
-                montantLabel.setText(String.format("%.2f €", montant));
+                montantLabel.setText(String.valueOf(montant));
             } else {
                 System.out.println("montantLabel est null. Assurez-vous que le FXML est correctement chargé.");
             }
