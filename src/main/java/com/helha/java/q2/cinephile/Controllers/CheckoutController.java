@@ -5,6 +5,7 @@ import com.helha.java.q2.cinephile.Models.FilmDb;
 import com.helha.java.q2.cinephile.Models.Tiquet;
 import com.helha.java.q2.cinephile.Models.TiquetDb;
 import com.helha.java.q2.cinephile.Views.CheckoutViewController;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -22,12 +23,9 @@ public class CheckoutController {
             FXMLLoader loader = new FXMLLoader(CheckoutController.class.getResource("/com/helha/java/q2/cinephile/checkout.fxml"));
             Parent root = loader.load();
             checkoutViewController = loader.getController();
-            checkoutViewController.setListener(new CheckoutViewController.NavListener() {
-                @Override
-                public void sendToTerminal(Double prix) {
-                    System.out.println("sendToTerminal2");
-                    startClient(prix, film);
-                }
+            checkoutViewController.setListener(prix -> {
+                System.out.println("sendToTerminal2");
+                startClient(prix, film);
             });
 
             // Obtient la scène actuelle
@@ -48,48 +46,49 @@ public class CheckoutController {
         String serverAddress = "127.0.0.1"; // Adresse IP du serveur (localhost)
         int serverPort = 12345; // Port utilisé par le serveur
         try (
-                // Connexion au serveur
                 Socket socket = new Socket(serverAddress, serverPort);
-                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in))
+                ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+                ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
         ) {
             System.out.println("Client démarré, connecté au serveur " + serverAddress + ":" + serverPort);
 
             // Envoi du montant au serveur
-            out.println(prix);
+            out.writeObject("SEND_PAYMENT " + prix);
+            out.flush();
             System.out.println("Montant " + prix + " envoyé au serveur.");
 
             // Lecture de la réponse du serveur
-            String response = in.readLine();
-            System.out.println("Réponse du serveur: " + response);
+            boolean responseReceived = false;
+            while (!responseReceived) {
+                Object response = in.readObject();
+                if (response instanceof String) {
+                    String command = (String) response;
+                    if (command.startsWith("PaymentAccepted")) {
+                        System.out.println("Réponse du serveur: " + response);
+                        System.out.println("le client a accepté la commande");
+                        double finalAmount = Double.parseDouble(command.split(" ")[1]); // Récupère le montant final
+                        System.out.println("le client a accepté la commande " + finalAmount);
+                        checkoutViewController.updateTotalPrice(finalAmount);
+                        int nombreDeTiquet = checkoutViewController.getTotalTicketsChosen();
+                        createNewTiquet(film.getId(), nombreDeTiquet, 3, "18:00", finalAmount, 1, 1, 1);
+                        updateTiquetsRestants(film.getId(), 3, nombreDeTiquet);
+                        System.out.println("Montant final restant: " + finalAmount);
+                        System.out.println("Nombre de tiquet: " + nombreDeTiquet);
 
-            // Afficher la réponse dans la console ou prendre une autre action
-            if ("Accepter".equalsIgnoreCase(response)) {
-                System.out.println("Le paiement a été accepté.");
+                        // Fermer la communication après avoir reçu la réponse attendue
+                        responseReceived = true;
+                    } else if (command.startsWith("PaymentRejected")) {
+                        System.out.println("le client a refusé la commande");
+                        responseReceived = true;
+                    }
 
-                // Lecture du prix depuis le serveur
-                String prixStr = in.readLine();
-                double prixFinal = Double.parseDouble(prixStr);
-                System.out.println("Montant final accepté: " + prixFinal);
-                checkoutViewController.updateTotalPrice(prixFinal);
-                int NombreDeTiquet = checkoutViewController.getTotalTicketsChosen();
-
-                // Appeler la méthode pour créer un nouveau tiquet
-                createNewTiquet(film.getId(), NombreDeTiquet, 3, "18:00", prixFinal, 1, 1, 1);
-                updateTiquetsRestants(film.getId(), 3,NombreDeTiquet);
-                System.out.println("Montant final restant: " + prixFinal);
-                System.out.println("Nombre de tiquet: " + NombreDeTiquet);
-            } else if ("Refuser".equalsIgnoreCase(response)) {
-                System.out.println("Le paiement a été refusé.");
-            } else {
-                System.out.println("Réponse inattendue du serveur.");
+                }
             }
-
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
+
     private static void createNewTiquet(int filmId, int nombreDeTiquet, int salle, String heure, double prix, int nombreDeTiquetEnfant, int nombreDeTiquetSenior, int nombreDeTiquetAdulte) {
         TiquetDb tiquetDb = new TiquetDb();
         Tiquet newTiquet = new Tiquet();
@@ -135,5 +134,4 @@ public class CheckoutController {
             e.printStackTrace();
         }
     }
-
 }

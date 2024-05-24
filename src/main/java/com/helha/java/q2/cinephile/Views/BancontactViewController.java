@@ -21,92 +21,69 @@ public class BancontactViewController {
     @FXML
     private Button rejectButton;
 
-    private Socket clientSocket;
-    private PrintWriter writer;
-    private CountDownLatch latch;
-
     private Listener listener;
+    private Blistener buttonListener;
+
     @FXML
     private TextField promoCodeTextField;
-    Double prix;
+
+    private Double prix;
 
     @FXML
     private void initialize() {
-
-        if (montantLabel == null) {
-            System.out.println("montantLabel est null. Assurez-vous que le FXML est correctement chargé.");
-        }
-        promoCodeTextField.setOnAction(event -> {
+        promoCodeTextField.setOnKeyReleased(event -> {
             prix = Double.valueOf(montantLabel.getText().substring(0, montantLabel.getText().length() - 1));
-            OnCodeEnter(promoCodeTextField.getText(), prix);
+            OnCodeEnter(promoCodeTextField.getText());
         });
 
         acceptButton.setOnAction(event -> {
-            sendResponseToClient("Accepter", prix);
+            prix = Double.valueOf(montantLabel.getText().substring(0, montantLabel.getText().length() - 1));
+            OnAccepted( prix);
         });
 
         rejectButton.setOnAction(event -> {
-            sendResponseToClient("Refuser",prix);
+            prix = Double.valueOf(montantLabel.getText().substring(0, montantLabel.getText().length() - 1));
+            OnRejected(prix);
         });
-
     }
 
     public void setMontant(double montant) {
         Platform.runLater(() -> {
-            if (montantLabel != null) {
-                prix=montant;
-                montantLabel.setText(String.valueOf(montant));
-            } else {
-                System.out.println("montantLabel est null. Assurez-vous que le FXML est correctement chargé.");
-            }
+            montantLabel.setText(String.format("%.2f €", montant));
         });
     }
 
-    public void setClientSocket(Socket clientSocket) {
-        this.clientSocket = clientSocket;
-        try {
-            writer = new PrintWriter(clientSocket.getOutputStream(), true);
-        } catch (Exception e) {
-            e.printStackTrace();
+
+    public void OnAccepted(Double prix) {
+        if (buttonListener != null) {
+            buttonListener.OnAccepted(prix);
+        }
+    }
+    public void OnRejected(Double prix) {
+        if (buttonListener != null) {
+            buttonListener.OnRejected(prix);
         }
     }
 
-    public void setLatch(CountDownLatch latch) {
-        this.latch = latch;
-    }
 
-    private void sendResponseToClient(String response, Double prix) {
-        try {
-            if (writer != null) {
-                writer.println(response);
-                writer.println(prix); // Envoyer le prix au client
-                System.out.println("Réponse envoyée au client: " + response);
-                System.out.println("Prix envoyé au client: " + prix);
-            } else {
-                System.out.println("Erreur: Le writer vers le socket client est null.");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (latch != null) {
-                latch.countDown(); // Décrémente le CountDownLatch
-            }
+    private void OnCodeEnter(String code) {
+        if (listener != null) {
+            listener.OnCodeEnter(code);
         }
     }
-    private void OnCodeEnter(String code, Double prix) {
-        if (listener != null){
-            listener.OnCodeEnter(code, prix);
-        }
-
-    }
-
-
 
     public void setListener(Listener listener) {
         this.listener = listener;
     }
-    public interface Listener {
-        void OnCodeEnter(String code, Double prix);
+    public void setButtonListener(Blistener buttonListener) {
+        this.buttonListener = buttonListener;
+    }
+    public interface Blistener{
+        void OnAccepted( Double prix);
+        void OnRejected( Double prix);
+    }
 
+    public interface Listener {
+        void OnCodeEnter(String code);
     }
 }

@@ -2,28 +2,32 @@ package com.helha.java.q2.cinephile.Controllers;
 
 import com.helha.java.q2.cinephile.Views.BancontactViewController;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.ServerSocket;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.concurrent.CountDownLatch;
 
 public class MainTerminal extends Application {
 
     private static BancontactViewController bancontactViewController;
+    private static Socket socket;
+    private static ObjectOutputStream out;
+    private static ObjectInputStream in;
+    private static double amountToPay;
+    private String code;
 
     public static void main(String[] args) {
-        // Lancez le serveur dans un thread séparé
-        new Thread(MainTerminal::startServer).start();
+        // Connect to the central server
+        new Thread(MainTerminal::connectToServer).start();
 
-        // Lancez l'application JavaFX
+        // Launch the JavaFX application
         launch(args);
     }
 
@@ -32,90 +36,67 @@ public class MainTerminal extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/helha/java/q2/cinephile/bancontact.fxml"));
         Parent root = loader.load();
         bancontactViewController = loader.getController();
-        bancontactViewController.setListener(new BancontactViewController.Listener() {
+        bancontactViewController.setListener((codeEntered) -> {
+            code = codeEntered;
+        });
+        bancontactViewController.setButtonListener(new BancontactViewController.Blistener() {
             @Override
-            public void OnCodeEnter(String codeEntrer, Double prix) {
-                double nouveauPrix ;
-                compareLinesWithPromoCode(codeEntrer);
-                if (compareLinesWithPromoCode(codeEntrer)){
-                    nouveauPrix = prix * 0.9;
-                    bancontactViewController.setMontant(nouveauPrix);
-                }
+            public void OnAccepted(Double price) {
+                System.out.println("Accepted");
+                sendPaymentResponse("PaymentAccepted", price, code);
+            }
 
-
+            @Override
+            public void OnRejected(Double price) {
+                sendPaymentResponse("PaymentRejected", price, code);
             }
         });
 
-        // Setup the stage
         primaryStage.setTitle("Bancontact Application");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
-
     }
 
-    private static void startServer() {
-        try (ServerSocket serverSocket = new ServerSocket(12345)) {
-            System.out.println("Serveur démarré. En attente de connexions...");
+    private static void connectToServer() {
+        String serverAddress = "127.0.0.1"; // Server IP address (localhost)
+        int serverPort = 12345; // Server port
 
+        try {
+            socket = new Socket(serverAddress, serverPort);
+            out = new ObjectOutputStream(socket.getOutputStream());
+            in = new ObjectInputStream(socket.getInputStream());
+
+            System.out.println("Connected to the central server at " + serverAddress + ":" + serverPort);
+
+            // Keep reading responses from the server
             while (true) {
-                Socket clientSocket = serverSocket.accept();
-                System.out.println("Client connecté depuis " + clientSocket.getInetAddress());
-
-                BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                String montantStr = reader.readLine();
-                System.out.println(montantStr);
-                Double montant = Double.parseDouble(montantStr);
-
-                CountDownLatch latch = new CountDownLatch(1);
-
-                if (bancontactViewController != null) {
-                    bancontactViewController.setMontant(montant);
-                    bancontactViewController.setClientSocket(clientSocket);
-                    bancontactViewController.setLatch(latch);
-
-                    // Attendre que la réponse soit reçue avant de fermer le socket
-                    try {
-                        latch.await();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                Object response = in.readObject();
+                if (response instanceof String) {
+                    String command = (String) response;
+                    if (command.startsWith("SEND_PAYMENT")) {
+                        double finalAmount = Double.parseDouble(command.split(" ")[1]);
+                        System.out.println("Payment accepted. Final amount: " + finalAmount);
+                        Platform.runLater(() -> {
+                            bancontactViewController.setMontant(finalAmount);
+                        });
+                        amountToPay = finalAmount;
                     }
-                } else {
-                    System.out.println("bancontactViewController est null.");
-                    clientSocket.close();
                 }
             }
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    public static String readFileCode() throws IOException {
-        String filePath = "src/main/resources/com/helha/java/q2/cinephile/promotionCode.txt";
-        StringBuilder content = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                content.append(line).append("\n");
+    private static void sendPaymentResponse(String response, Double finalAmount, String code) {
+            try {
+                System.out.println("Sending payment response: " + response );
+                out.writeObject("RESEND_PAYMENTRESPONSE " +response + " " + finalAmount + " "+ code);
+                out.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        }
-        return content.toString();
     }
 
-    public static boolean compareLinesWithPromoCode( String codeEntrer) {
-        try {
-            String fileContent = readFileCode();
-            String[] lines = fileContent.split("\n");
 
-            for (String line : lines) {
-                if (line.trim().equals(codeEntrer)) {
-                    System.out.println("Le nom " + codeEntrer + " a été trouvé dans le fichier.");
-                    return true;
-                }
-            }
-            return false;
-        } catch (IOException e) {
-            System.out.println("Erreur lors de la lecture du fichier : " + e.getMessage());
-        }
-        return false;
-    }
 }

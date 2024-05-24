@@ -55,8 +55,10 @@ public class CheckoutViewController {
 
         checkoutbtn.setOnAction(event -> {
             // Récupérer le prix à nouveau au moment du clic
-            Double prix = Double.valueOf( ticketPriceLabel.getText().substring(0, ticketPriceLabel.getText().length() - 1));
-            openBancontactPage(prix);
+            String labelText = ticketPriceLabel.getText();
+            double ticketPrice = Double.parseDouble(labelText);
+            System.out.println("Prix du ticket : " + ticketPrice);
+            openBancontactPage(ticketPrice);
         });
     }
 
