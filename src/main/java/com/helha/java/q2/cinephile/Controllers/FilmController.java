@@ -19,11 +19,12 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 public class FilmController {
-    private FilmViewController filmView;
+    private static FilmViewController filmView;
     private Stage filmStage;
-    private Socket socket;
-    private ObjectOutputStream out;
-    private ObjectInputStream in;
+    private static Socket socket;
+    private static ObjectOutputStream out;
+    private static ObjectInputStream in;
+
 
     public FilmController() {
         this.filmView = filmView;
@@ -52,7 +53,7 @@ public class FilmController {
         loadFilms();
         loadTiquets();
     }
-    private void connectToServer() {
+    static void connectToServer() {
         try {
             socket = new Socket("localhost", 12345);
             out = new ObjectOutputStream(socket.getOutputStream());
@@ -74,11 +75,12 @@ public class FilmController {
         }
     }
 
-    private void loadTiquets() {
+    public static void loadTiquets() {
         try {
             out.writeObject("GET_TIQUETS");
             out.flush();
-            List<Tiquet> tiquets = (List<Tiquet>) in.readObject();
+            List<Tiquet> tiquets = null;
+            tiquets = (List<Tiquet>) in.readObject();
             filmView.displayTiquets(tiquets);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();

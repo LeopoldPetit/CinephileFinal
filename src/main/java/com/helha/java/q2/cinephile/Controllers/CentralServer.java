@@ -145,7 +145,7 @@ public class CentralServer {
                 System.out.println("Invalid response format: " + command);
                 return;
             }
-            String response = parts[1];  // "PAYMENTACCEPTED" ou "PAYMENTREJECTED"
+            String response = parts[1];  //
             System.out.println(response);
             double finalAmount = Double.parseDouble(parts[2]);  // Le montant final
             String code = parts[3];
@@ -156,10 +156,14 @@ public class CentralServer {
             }
             System.out.println("Nombre tiquet: " + NombreTiquets);
             System.out.println("FilmId: " + FilmId);
-            FilmDb filmDb = new FilmDb();
-            Film film=filmDb.getFilmById(FilmId);
-            createNewTiquet(FilmId, NombreTiquets,room,hour, finalAmount,NombreDeTiquetEnfant, NombreDeTiquetSenior, NombreDeTiquetAdulte, film.getTitre());
-            updateTiquetsRestants(FilmId,1,NombreTiquets);
+            if(response.equals("PaymentAccepted")){
+                FilmDb filmDb = new FilmDb();
+                Film film=filmDb.getFilmById(FilmId);
+                createNewTiquet(FilmId, NombreTiquets,room,hour, finalAmount,NombreDeTiquetEnfant, NombreDeTiquetSenior, NombreDeTiquetAdulte, film.getTitre());
+                updateTiquetsRestants(FilmId,room,NombreTiquets);
+            }
+
+
 
             // Envoyer la réponse à tous les clients sauf à celui-ci
             for (ClientHandler client : clients) {
@@ -226,12 +230,15 @@ public class CentralServer {
                 // Mettre à jour les tiquets restants dans la salle choisie
                 switch (salle) {
                     case 1:
+                        System.out.println("salle: 1"+film.getTitre()+nombreDeTiquetAchetes);
                         film.setTiquetsRestantsSalle1(film.getTiquetsRestantsSalle1() - nombreDeTiquetAchetes);
                         break;
                     case 2:
+                        System.out.println("salle: 2"+film.getTitre()+nombreDeTiquetAchetes);
                         film.setTiquetsRestantsSalle2(film.getTiquetsRestantsSalle2() - nombreDeTiquetAchetes);
                         break;
                     case 3:
+                        System.out.println("salle: 3"+film.getTitre()+nombreDeTiquetAchetes);
                         film.setTiquetsRestantsSalle3(film.getTiquetsRestantsSalle3() - nombreDeTiquetAchetes);
                         break;
                     default:

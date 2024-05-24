@@ -225,6 +225,7 @@ public class FilmViewController implements Initializable {
     }
 
     public void displayTiquets(List<Tiquet> tiquets) {
+        menu.getItems().clear();
         for (Tiquet tiquet : tiquets) {
 
                 // Construction du texte du menu avec le titre du film

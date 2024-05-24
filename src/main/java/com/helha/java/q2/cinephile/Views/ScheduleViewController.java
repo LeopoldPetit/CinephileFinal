@@ -74,6 +74,16 @@ public class ScheduleViewController {
     @FXML
     private Button buyticketbtn;
 
+    @FXML
+    private Label ticketsRoom1;
+
+    @FXML
+    private Label ticketsRoom2;
+
+    @FXML
+    private Label ticketsRoom3;
+
+
 
     /**
      * Initialise le contrôleur.
@@ -123,6 +133,11 @@ public class ScheduleViewController {
         moviesynopsis.setText(film.getTexte());
         movietitle.setText(film.getTitre());
         movieduration.setText(film.getDuree());
+        afficherTicketsRestants(
+                film.getTiquetsRestantsSalle1(),
+                film.getTiquetsRestantsSalle2(),
+                film.getTiquetsRestantsSalle3()
+        );
     }
 
 
@@ -177,4 +192,12 @@ public class ScheduleViewController {
 
         return formatted.toString().trim();
     }
+
+    private void afficherTicketsRestants(int ticketsRoom1Count, int ticketsRoom2Count, int ticketsRoom3Count) {
+        ticketsRoom1.setText("Tickets restants : " + ticketsRoom1Count);
+        ticketsRoom2.setText("Tickets restants : " + ticketsRoom2Count);
+        ticketsRoom3.setText("Tickets restants : " + ticketsRoom3Count);
+    }
 }
+
+

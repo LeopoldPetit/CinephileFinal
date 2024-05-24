@@ -74,7 +74,8 @@ public class CheckoutController {
                         checkoutViewController.updateTotalPrice(finalAmount);
                         System.out.println("Montant final restant: " + finalAmount);
                         System.out.println("Nombre de tiquet: " + nombreDeTiquet);
-
+                        FilmController.connectToServer();
+                        FilmController.loadTiquets();
                         // Fermer la communication après avoir reçu la réponse attendue
                         responseReceived = true;
                     } else if (command.startsWith("PaymentRejected")) {
@@ -88,7 +89,5 @@ public class CheckoutController {
             e.printStackTrace();
         }
     }
-
-
 }
 

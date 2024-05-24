@@ -76,6 +76,9 @@
                                 <Font size="24.0" />
                             </font>
                         </ToggleButton>
+                        <Label fx:id="ticketsRoom1" layoutX="400.0" layoutY="109.0" mnemonicParsing="false" style="-fx-background-color: #aab0ad; -fx-background-radius: 20;" ></Label>
+                        <Label fx:id="ticketsRoom2" layoutX="400.0" layoutY="211.0" mnemonicParsing="false" style="-fx-background-color: #aab0ad; -fx-background-radius: 20;" ></Label>
+                        <Label fx:id="ticketsRoom3" layoutX="400.0" layoutY="317.0" mnemonicParsing="false" style="-fx-background-color: #aab0ad; -fx-background-radius: 20;" ></Label>
 
                     </children>
                 </AnchorPane>
@@ -109,11 +112,7 @@
                                 <Font size="14.0" />
                             </font>
                         </Label>
-                        <Label layoutX="20.0" layoutY="166.0" text="Tickets Vendus">
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                        </Label>
+
                         <Label fx:id="movierating" layoutX="250.0" layoutY="46.0" text="7.7">
                             <font>
                                 <Font size="14.0" />
@@ -124,7 +123,7 @@
                                 <Font size="14.0" />
                             </font>
                         </Label>
-                        <Label fx:id="movierepeats" layoutX="250.0" layoutY="126.0" text="300">
+                        <Label fx:id="movierepeats" layoutX="250.0" layoutY="126.0" text="50">
                             <font>
                                 <Font size="14.0" />
                             </font>

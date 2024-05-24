@@ -49,7 +49,7 @@ public class BancontactViewController {
 
     public void setMontant(double montant) {
         Platform.runLater(() -> {
-            montantLabel.setText(String.format("%.2f €", montant));
+            montantLabel.setText(String.valueOf(montant));
         });
     }
 
