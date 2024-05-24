@@ -89,13 +89,13 @@ public class MainTerminal extends Application {
     }
 
     private static void sendPaymentResponse(String response, Double finalAmount, String code) {
-            try {
-                System.out.println("Sending payment response: " + response );
-                out.writeObject("RESEND_PAYMENTRESPONSE " +response + " " + finalAmount + " "+ code);
-                out.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        try {
+            System.out.println("Sending payment response: " + response );
+            out.writeObject("RESEND_PAYMENTRESPONSE " +response + " " + finalAmount + " "+ code);
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

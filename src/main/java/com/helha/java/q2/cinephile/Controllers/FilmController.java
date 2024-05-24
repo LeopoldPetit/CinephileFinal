@@ -2,6 +2,8 @@ package com.helha.java.q2.cinephile.Controllers;
 
 import com.helha.java.q2.cinephile.Models.Film;
 import com.helha.java.q2.cinephile.Models.FilmDb;
+import com.helha.java.q2.cinephile.Models.Tiquet;
+import com.helha.java.q2.cinephile.Models.TiquetDb;
 import com.helha.java.q2.cinephile.Views.FilmViewController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -48,6 +50,7 @@ public class FilmController {
         primaryStage.show();
         connectToServer();
         loadFilms();
+        loadTiquets();
     }
     private void connectToServer() {
         try {
@@ -58,7 +61,6 @@ public class FilmController {
             e.printStackTrace();
         }
     }
-
     private void loadFilms() {
         try {
             out.writeObject("GET_FILMS");
@@ -72,4 +74,14 @@ public class FilmController {
         }
     }
 
+    private void loadTiquets() {
+        try {
+            out.writeObject("GET_TIQUETS");
+            out.flush();
+            List<Tiquet> tiquets = (List<Tiquet>) in.readObject();
+            filmView.displayTiquets(tiquets);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 }

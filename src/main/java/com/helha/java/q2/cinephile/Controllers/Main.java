@@ -1,11 +1,6 @@
 package com.helha.java.q2.cinephile.Controllers;
 
-import com.helha.java.q2.cinephile.Models.FilmDb;
-import com.helha.java.q2.cinephile.Views.FilmViewController;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -31,9 +26,13 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
     @Override
     public void start(Stage primaryStage) throws IOException, URISyntaxException {
         FilmController filmController = new FilmController();
         filmController.start(primaryStage);
     }
 }
+
+
+

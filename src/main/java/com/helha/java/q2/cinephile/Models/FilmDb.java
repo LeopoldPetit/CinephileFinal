@@ -16,7 +16,7 @@ public class FilmDb {
      */
     public FilmDb() {
         try {
-            conn = DriverManager.getConnection("jdbc:sqlite:resources/films.db");
+            conn = DriverManager.getConnection("jdbc:sqlite:resources/data.db");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -57,6 +57,7 @@ public class FilmDb {
         }
         return films;
     }
+
 
     /**
      * Récupère un film à partir de la base de données en fonction de son identifiant.

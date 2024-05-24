@@ -12,7 +12,7 @@ public class TiquetDb {
      */
     public TiquetDb() {
         try {
-            conn = DriverManager.getConnection("jdbc:sqlite:resources/films.db");
+            conn = DriverManager.getConnection("jdbc:sqlite:resources/data.db");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -41,6 +41,8 @@ public class TiquetDb {
                 tiquet.setNombreDeTiquetEnfant(rs.getInt("NombreDeTiquetEnfant"));
                 tiquet.setNombreDeTiquetSenior(rs.getInt("NombreDeTiquetSenior"));
                 tiquet.setNombreDeTiquetAdulte(rs.getInt("NombreDeTiquetAdulte"));
+                tiquet.setNomFilm(rs.getString("NomFilm"));
+
 
                 tiquets.add(tiquet);
             }
@@ -75,6 +77,7 @@ public class TiquetDb {
                     tiquet.setNombreDeTiquetEnfant(rs.getInt("NombreDeTiquetEnfant"));
                     tiquet.setNombreDeTiquetSenior(rs.getInt("NombreDeTiquetSenior"));
                     tiquet.setNombreDeTiquetAdulte(rs.getInt("NombreDeTiquetAdulte"));
+                    tiquet.setNomFilm(rs.getString("NomFilm"));
                 }
             }
         } catch (SQLException e) {
@@ -84,7 +87,7 @@ public class TiquetDb {
         return tiquet;
     }
     public void insertTiquet(Tiquet tiquet) {
-        String query = "INSERT INTO Tiquets (FilmId, NombreDeTiquet, Salle, Heure, Prix, NombreDeTiquetEnfant, NombreDeTiquetSenior, NombreDeTiquetAdulte) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Tiquets (FilmId, NombreDeTiquet, Salle, Heure, Prix, NombreDeTiquetEnfant, NombreDeTiquetSenior, NombreDeTiquetAdulte, NomFilm) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setInt(1, tiquet.getFilmId());
@@ -95,6 +98,7 @@ public class TiquetDb {
             pstmt.setInt(6, tiquet.getNombreDeTiquetEnfant());
             pstmt.setInt(7, tiquet.getNombreDeTiquetSenior());
             pstmt.setInt(8, tiquet.getNombreDeTiquetAdulte());
+            pstmt.setString(9, tiquet.getNomFilm());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

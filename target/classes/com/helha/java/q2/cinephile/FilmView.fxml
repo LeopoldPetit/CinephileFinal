@@ -16,20 +16,11 @@
     <MenuBar style="-fx-background-color: #344D59;-fx-min-height: 30px;"
     >
         <!-- Menu "Fichier" -->
-        <Menu text="Compte" style="-fx-background-color: #137C8B;-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-end-margin: 10px " >
-            <MenuItem text="Se Connecter"/>
+        <Menu text="Historique" fx:id="menu" style="-fx-background-color: #137C8B;-fx-background-radius: 10px; -fx-border-radius: 10px; -fx-end-margin: 10px ">
         </Menu>
 
         <!-- Menu "Édition" -->
-        <Menu text="Trier par Jour" style="-fx-background-color: #137C8B;-fx-background-radius: 10px; -fx-border-radius: 10px; ">
-            <MenuItem text="Lundi"/>
-            <MenuItem text="Mardi"/>
-            <MenuItem text="Mercredi"/>
-            <MenuItem text="Jeudi"/>
-            <MenuItem text="Vendredi"/>
-            <MenuItem text="Samedi"/>
-            <MenuItem text="Dimanche"/>
-        </Menu>
+
     </MenuBar>
 
     <ScrollPane fitToWidth="true" fitToHeight="true" >
@@ -46,3 +37,4 @@
     </ScrollPane>
 
 </VBox>
+

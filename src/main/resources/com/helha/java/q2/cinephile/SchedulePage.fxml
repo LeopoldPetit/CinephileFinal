@@ -10,12 +10,14 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainmoviespane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.helha.java.q2.cinephile.Views.ScheduleViewController">
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.geometry.Insets?>
+<AnchorPane fx:id="mainmoviespane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1158.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.helha.java.q2.cinephile.Views.ScheduleViewController">
     <children>
-        <AnchorPane layoutX="-2.0" prefHeight="763.0" prefWidth="1204.0" style="-fx-background-color: #E8E8E8;">
+        <AnchorPane layoutX="-2.0" prefHeight="767.0" prefWidth="1168.0" style="-fx-background-color: #E8E8E8;">
             <children>
 
-                <AnchorPane fx:id="toppane" prefHeight="35.0" prefWidth="1204.0" style="-fx-background-color: #af0a0a;">
+                <AnchorPane fx:id="toppane" prefHeight="35.0" prefWidth="1170.0" style="-fx-background-color: #0E8585;">
                     <children>
                         <Label layoutX="522.0" layoutY="6.0" prefHeight="23.0" prefWidth="250.0" text="Movie Schedules" textFill="WHITE">
                             <font>
@@ -25,11 +27,11 @@
                     </children>
                 </AnchorPane>
                 <HBox layoutX="880.0" prefHeight="35.0" />
-                <AnchorPane fx:id="tablepane" layoutX="15.0" layoutY="256.0" prefHeight="408.0" prefWidth="1188.0" styleClass="tiles">
+                <AnchorPane fx:id="tablepane" layoutX="15.0" layoutY="256.0" prefHeight="411.0" prefWidth="1118.0" styleClass="tiles">
                     <children>
                         <AnchorPane fx:id="SCREEN3" layoutX="15.0" layoutY="295.0" prefHeight="90.0" prefWidth="110.0" style="-fx-background-color: #af0a0a; -fx-background-radius: 5;" styleClass="tiles">
                             <children>
-                                <Label layoutX="10.0" layoutY="28.0" text="Room 3" textFill="WHITE">
+                                <Label layoutX="10.0" layoutY="28.0" text="Salle 3" textFill="WHITE">
                                     <font>
                                         <Font size="21.0" />
                                     </font>
@@ -38,7 +40,7 @@
                         </AnchorPane>
                         <AnchorPane fx:id="SCREEN2" layoutX="15.0" layoutY="190.0" prefHeight="90.0" prefWidth="110.0" style="-fx-background-color: #af0a0a; -fx-background-radius: 5;" styleClass="tiles">
                             <children>
-                                <Label layoutX="10.0" layoutY="28.0" text="Room 2" textFill="WHITE">
+                                <Label layoutX="10.0" layoutY="28.0" text="Salle 2" textFill="WHITE">
                                     <font>
                                         <Font size="21.0" />
                                     </font>
@@ -47,7 +49,7 @@
                         </AnchorPane>
                         <AnchorPane fx:id="SCREEN1" layoutX="15.0" layoutY="85.0" prefHeight="90.0" prefWidth="110.0" style="-fx-background-color: #af0a0a; -fx-background-radius: 5;" styleClass="tiles">
                             <children>
-                                <Label layoutX="10.0" layoutY="28.0" text="Room 1" textFill="WHITE">
+                                <Label layoutX="10.0" layoutY="28.0" text="Salle 1" textFill="WHITE">
                                     <font>
                                         <Font size="21.0" />
                                     </font>
@@ -58,121 +60,97 @@
                         <Line endX="908.73828125" endY="-3.0517578125E-5" layoutX="233.0" layoutY="184.0" startX="-217.0" stroke="#009688" strokeWidth="0.6" />
                         <Line endX="914.558837890625" layoutX="233.0" layoutY="289.0" startX="-217.0" stroke="#009688" strokeWidth="0.6" />
                         <Line endX="906.7979736328125" endY="-6.103515625E-5" layoutX="233.0" layoutY="392.0" startX="-217.0" stroke="#009688" strokeMiterLimit="0.0" strokeWidth="0.6" />
-                        <Button layoutX="333.0" layoutY="109.0" mnemonicParsing="false" style="-fx-background-color: #aab0ad; -fx-background-radius: 20;" text="13H">
+                        <ToggleButton fx:id="room1Button" layoutX="220.0" layoutY="109.0" mnemonicParsing="false" style="-fx-background-color: #aab0ad; -fx-background-radius: 20;" text="13H">
                             <font>
                                 <Font size="24.0" />
-                            </font></Button>
-                        <Button layoutX="462.0" layoutY="109.0" mnemonicParsing="false" style="-fx-background-color: #aab0ad; -fx-background-radius: 20;" text="19H">
-                            <font>
-                                <Font size="24.0" />
-                            </font>
-                        </Button>
-                        <Button layoutX="236.0" layoutY="317.0" mnemonicParsing="false" style="-fx-background-color: #aab0ad; -fx-background-radius: 20;" text="11H">
+                            </font></ToggleButton>
+
+                        <ToggleButton fx:id="room3Button" layoutX="290.0" layoutY="317.0" mnemonicParsing="false" style="-fx-background-color: #aab0ad; -fx-background-radius: 20;" text="19H">
                             <font>
                                 <Font size="24.0" />
                             </font>
-                        </Button>
-                        <Button layoutX="440.0" layoutY="320.0" mnemonicParsing="false" style="-fx-background-color: #aab0ad; -fx-background-radius: 20;" text="17H">
+                        </ToggleButton>
+
+                        <ToggleButton fx:id="room2Button" layoutX="255.0" layoutY="211.0" mnemonicParsing="false" style="-fx-background-color: #aab0ad; -fx-background-radius: 20;" text="17H">
                             <font>
                                 <Font size="24.0" />
                             </font>
-                        </Button>
-                        <Button layoutX="200.0" layoutY="211.0" mnemonicParsing="false" style="-fx-background-color: #aab0ad; -fx-background-radius: 20;" text="10H30">
-                            <font>
-                                <Font size="24.0" />
-                            </font>
-                        </Button>
-                        <Button layoutX="577.0" layoutY="211.0" mnemonicParsing="false" style="-fx-background-color: #aab0ad; -fx-background-radius: 20;" text="23H">
-                            <font>
-                                <Font size="24.0" />
-                            </font>
-                        </Button>
+                        </ToggleButton>
+
                     </children>
                 </AnchorPane>
-                <AnchorPane fx:id="moviepane" layoutX="15.0" layoutY="45.0" prefHeight="260.0" prefWidth="1176.0"
-                            styleClass="tiles">
-                    <ImageView fx:id="movieimage" fitHeight="200.0" fitWidth="157.0" layoutX="15.0" layoutY="15.0"
-                               pickOnBounds="true" preserveRatio="true" styleClass="tiles">
+                <AnchorPane fx:id="moviepane" layoutX="15.0" layoutY="45.0" prefHeight="260.0" prefWidth="1110.0" styleClass="tiles">
+                    <ImageView fx:id="movieimage" fitHeight="200.0" fitWidth="157.0" layoutX="15.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" styleClass="tiles">
                     </ImageView>
-                    <AnchorPane layoutX="300.0" layoutY="19.0" prefHeight="200.0" prefWidth="420.0" styleClass="tiles">
-                        <AnchorPane prefHeight="35.0" prefWidth="420.0" style="-fx-background-color: #FC950D;">
-                            <Label fx:id="movietitle" layoutX="10.0" layoutY="4.0"
-                                   text="Guardians Of The Galaxy Vol 2" textFill="WHITE">
+                    <AnchorPane layoutX="240.0" layoutY="19.0" prefHeight="200.0" prefWidth="420.0" styleClass="tiles">
+                        <AnchorPane prefHeight="35.0" prefWidth="420.0" style="-fx-background-color: #af0a0a;">
+                            <Label fx:id="movietitle" layoutX="10.0" layoutY="4.0" text="Guardians Of The Galaxy Vol 2" textFill="WHITE">
                                 <font>
-                                    <Font size="20.0"/>
+                                    <Font size="20.0" />
                                 </font>
                             </Label>
                         </AnchorPane>
-                        <Line endX="400.0" layoutX="10.0" layoutY="70.0" stroke="#009688" strokeWidth="0.6"/>
-                        <Line endX="400.0" layoutX="10.0" layoutY="110.0" stroke="#009688" strokeWidth="0.6"/>
-                        <Line endX="400.0" layoutX="10.0" layoutY="150.0" stroke="#009688" strokeWidth="0.6"/>
-                        <Line endX="400.0" layoutX="10.0" layoutY="190.0" stroke="#009688" strokeWidth="0.6"/>
-                        <Label layoutX="20.0" layoutY="46.0" text="IMDB Rating">
+                        <Line endX="400.0" layoutX="10.0" layoutY="70.0" stroke="#009688" strokeWidth="0.6" />
+                        <Line endX="400.0" layoutX="10.0" layoutY="110.0" stroke="#009688" strokeWidth="0.6" />
+                        <Line endX="400.0" layoutX="10.0" layoutY="150.0" stroke="#009688" strokeWidth="0.6" />
+                        <Line endX="400.0" layoutX="10.0" layoutY="190.0" stroke="#009688" strokeWidth="0.6" />
+                        <Label layoutX="20.0" layoutY="46.0" text="IMDB Note">
                             <font>
-                                <Font size="14.0"/>
+                                <Font size="14.0" />
                             </font>
                         </Label>
-                        <Label layoutX="20.0" layoutY="86.0" text="Movie Duration">
+                        <Label layoutX="20.0" layoutY="86.0" text="Durée">
                             <font>
-                                <Font size="14.0"/>
+                                <Font size="14.0" />
                             </font>
                         </Label>
-                        <Label layoutX="20.0" layoutY="126.0" text="Number of Seats">
+                        <Label layoutX="20.0" layoutY="126.0" text="Nombre de Sièges">
                             <font>
-                                <Font size="14.0"/>
+                                <Font size="14.0" />
                             </font>
                         </Label>
-                        <Label layoutX="20.0" layoutY="166.0" text="Tickets Sold">
+                        <Label layoutX="20.0" layoutY="166.0" text="Tickets Vendus">
                             <font>
-                                <Font size="14.0"/>
+                                <Font size="14.0" />
                             </font>
                         </Label>
                         <Label fx:id="movierating" layoutX="250.0" layoutY="46.0" text="7.7">
                             <font>
-                                <Font size="14.0"/>
+                                <Font size="14.0" />
                             </font>
                         </Label>
                         <Label fx:id="movieduration" layoutX="250.0" layoutY="86.0" text="01:56:24">
                             <font>
-                                <Font size="14.0"/>
+                                <Font size="14.0" />
                             </font>
                         </Label>
                         <Label fx:id="movierepeats" layoutX="250.0" layoutY="126.0" text="300">
                             <font>
-                                <Font size="14.0"/>
+                                <Font size="14.0" />
                             </font>
                         </Label>
                         <Label fx:id="movieticketsold" layoutX="250.0" layoutY="166.0" text="105">
                             <font>
-                                <Font size="14.0"/>
+                                <Font size="14.0" />
                             </font>
                         </Label>
                     </AnchorPane>
-                    <Button fx:id="detailsbtn" alignment="TOP_LEFT" graphicTextGap="20.0" layoutX="800.0" layoutY="45.0"
-                            prefHeight="50.0" prefWidth="235.0"
-                            style="-fx-background-color: #0e8585; -fx-background-radius: 5;" text="View Movie Details"
-                            textFill="WHITE">
-                        <font>
-                            <Font size="21.0"/>
-                        </font>
-                        <cursor>
-                            <Cursor fx:constant="HAND"/>
-                        </cursor>
-                    </Button>
-                    <Button fx:id="otherschedulebtn" alignment="TOP_LEFT" graphicTextGap="20.0" layoutX="800.0"
-                            layoutY="105.0" prefHeight="50.0" prefWidth="235.0"
-                            style="-fx-background-color: #0e8585; -fx-background-radius: 5;" text="Other Schedules"
-                            textFill="WHITE">
-                        <font>
-                            <Font size="19.0"/>
-                        </font>
-                        <cursor>
-                            <Cursor fx:constant="HAND"/>
-                        </cursor>
-                    </Button>
-                    <DatePicker layoutX="800.0" layoutY="165.0" prefHeight="50.0" prefWidth="235.0" promptText="Date"/>
+
+                        <Label fx:id="moviesynopsis" alignment="TOP_LEFT" graphicTextGap="20.0" layoutX="710.0" layoutY="20.0" prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: #0e8585; -fx-background-radius: 5;" textFill="WHITE" wrapText="true">
+                            <padding>
+                                <Insets top="10" right="10" bottom="10" left="10"/>
+                            </padding>
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </Label>
+
+
                 </AnchorPane>
-                <Button fx:id="buyticketbtn" alignment="CENTER" graphicTextGap="20.0" layoutX="873.0" layoutY="687.0" prefHeight="50.0" prefWidth="238.0" style="-fx-background-color: #0e8585; -fx-background-radius: 5;" text="Buy Ticket" textFill="WHITE">
+                <Button fx:id="buyticketbtn" alignment="CENTER" graphicTextGap="20.0" layoutX="873.0" layoutY="687.0" prefHeight="50.0" prefWidth="238.0" style="-fx-background-color: #0e8585; -fx-background-radius: 5;" text="Acheter Mes Tickets" textFill="WHITE">
                     <font>
                         <Font size="19.0" />
                     </font>
@@ -184,3 +162,6 @@
         </AnchorPane>
     </children>
 </AnchorPane>
+
+
+

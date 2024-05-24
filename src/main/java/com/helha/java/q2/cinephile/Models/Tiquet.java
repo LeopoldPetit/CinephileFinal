@@ -1,6 +1,8 @@
 package com.helha.java.q2.cinephile.Models;
 
-public class Tiquet {
+import java.io.Serializable;
+
+public class Tiquet implements Serializable {
     private int filmId;
     private int id;
     private int nombreDeTiquet;
@@ -10,6 +12,7 @@ public class Tiquet {
     private int nombreDeTiquetEnfant;
     private int nombreDeTiquetSenior;
     private int nombreDeTiquetAdulte;
+    private String NomFilm;
 
     // Getters and setters
     public int getFilmId() {
@@ -19,6 +22,10 @@ public class Tiquet {
     public void setFilmId(int filmId) {
         this.filmId = filmId;
     }
+
+    public String getNomFilm() {return NomFilm;}
+
+    public void setNomFilm(String NomFilm) {this.NomFilm = NomFilm;}
 
     public int getId() {
         return id;

@@ -20,32 +20,34 @@ public class ScheduleController {
 
     }
     public void start(Stage primaryStage, Film film) throws IOException, URISyntaxException {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/helha/java/q2/cinephile/SchedulePage.fxml"));
-                Parent root = loader.load();
-                ScheduleViewController scheduleController = loader.getController();
-                scheduleController.setListener(new ScheduleViewController.NavListener() {
-                    @Override
-                    public void openCheckoutPage() {
-                       CheckoutController.openCheckout(film);
-                    }
-                });
-                scheduleController.setFilm(film);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/helha/java/q2/cinephile/SchedulePage.fxml"));
+            Parent root = loader.load();
+            ScheduleViewController scheduleController = loader.getController();
+            scheduleController.setListener(new ScheduleViewController.NavListener() {
+                @Override
+                public void openCheckoutPage(String selectedRoom,String selectedHour) {
+                    CheckoutController.openCheckout(film, selectedRoom , selectedHour);
+                    System.out.println(selectedRoom);
+                    System.out.println(selectedHour);
+                }
+            });
+            scheduleController.setFilm(film);
 
-                // Créez une nouvelle scène avec la racine chargée
-                Scene newScene = new Scene(root);
+            // Créez une nouvelle scène avec la racine chargée
+            Scene newScene = new Scene(root);
 
-                // Créez un nouveau stage pour la nouvelle scène
-                Stage newStage = new Stage();
-                newStage.setScene(newScene);
-                newStage.setWidth(1150);
-                newStage.setHeight(800);
-                newStage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
+            // Créez un nouveau stage pour la nouvelle scène
+            Stage newStage = new Stage();
+            newStage.setScene(newScene);
+            newStage.setWidth(1150);
+            newStage.setHeight(800);
+            newStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
 }
+

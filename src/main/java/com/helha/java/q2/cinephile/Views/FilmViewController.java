@@ -3,6 +3,8 @@ package com.helha.java.q2.cinephile.Views;
 import com.helha.java.q2.cinephile.Controllers.FilmController;
 import com.helha.java.q2.cinephile.Models.Film;
 import com.helha.java.q2.cinephile.Models.FilmDb;
+import com.helha.java.q2.cinephile.Models.Tiquet;
+import com.helha.java.q2.cinephile.Models.TiquetDb;
 import javafx.animation.Interpolator;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
@@ -13,6 +15,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
@@ -33,6 +37,7 @@ import java.util.ResourceBundle;
 public class FilmViewController implements Initializable {
     @FXML
     public FlowPane flowPane;
+    public Menu menu;
 
     private FilmDb filmDb;
     private FilmController filmController;
@@ -218,6 +223,21 @@ public class FilmViewController implements Initializable {
             }
         }
     }
+
+    public void displayTiquets(List<Tiquet> tiquets) {
+        for (Tiquet tiquet : tiquets) {
+
+                // Construction du texte du menu avec le titre du film
+                String menuText = tiquet.getNombreDeTiquet() + "x Tiquet vendu pour le film " + tiquet.getNomFilm() + " à la salle " + tiquet.getSalle() + " à " + tiquet.getHeure() + " pour un prix de " + tiquet.getPrix() + "€";
+                MenuItem menuItem = new MenuItem(menuText);
+                menu.getItems().add(menuItem);
+
+        }
+    }
+
+
 }
+
+
 
 
