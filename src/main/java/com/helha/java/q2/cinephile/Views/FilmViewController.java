@@ -57,6 +57,7 @@ public class FilmViewController implements Initializable {
     }
 
     public void displayFilms(List<Film> films) throws MalformedURLException, URISyntaxException {
+        flowPane.getChildren().clear();
         for (Film film : films) {
             ImageView FrontImage = new ImageView(new Image(film.getImage()));
             FrontImage.setFitWidth(200);
@@ -112,7 +113,6 @@ public class FilmViewController implements Initializable {
             StackPane.setAlignment(button, Pos.BOTTOM_CENTER);
             stackPane.setOnMouseEntered(event -> flipImage(FrontImage, backImage, texte, button)); // Utilisation de la nouvelle fonction flipImage
             stackPane.setOnMouseExited(event -> flipBackImage(backImage, FrontImage, texte, button)); // Utilisation de la nouvelle fonction flipImageBack
-
             flowPane.getChildren().add(stackPane);
         }
 

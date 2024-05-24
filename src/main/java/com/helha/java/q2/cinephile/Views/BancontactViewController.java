@@ -52,6 +52,11 @@ public class BancontactViewController {
             montantLabel.setText(String.valueOf(montant));
         });
     }
+    public void reSetMontant() {
+        Platform.runLater(() -> {
+            montantLabel.setText(null);
+        });
+    }
 
 
     public void OnAccepted(Double prix) {

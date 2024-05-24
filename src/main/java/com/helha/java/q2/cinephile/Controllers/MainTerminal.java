@@ -22,6 +22,8 @@ public class MainTerminal extends Application {
     private static ObjectInputStream in;
     private static double amountToPay;
     private String code;
+    private static Stage stage;
+
 
     public static void main(String[] args) {
         // Connect to the central server
@@ -35,6 +37,7 @@ public class MainTerminal extends Application {
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/helha/java/q2/cinephile/bancontact.fxml"));
         Parent root = loader.load();
+        stage=primaryStage;
         bancontactViewController = loader.getController();
         bancontactViewController.setListener((codeEntered) -> {
             code = codeEntered;
@@ -77,6 +80,8 @@ public class MainTerminal extends Application {
                         double finalAmount = Double.parseDouble(command.split(" ")[1]);
                         System.out.println("Payment accepted. Final amount: " + finalAmount);
                         Platform.runLater(() -> {
+                            notifyPrimaryStage();
+
                             bancontactViewController.setMontant(finalAmount);
                         });
                         amountToPay = finalAmount;
@@ -87,12 +92,27 @@ public class MainTerminal extends Application {
             e.printStackTrace();
         }
     }
+    private static void notifyPrimaryStage() {
+        // Bring primary stage to front and request focus
+        stage.setAlwaysOnTop(true);  // Force it to the front
+        stage.toFront();
+        stage.requestFocus();
+        stage.setAlwaysOnTop(false);  // Reset the always-on-top status
+    }
+    private static void sendPrimaryStageToBack() {
+        // Send primary stage to back
+        stage.setAlwaysOnTop(false); // Ensure it is not always on top
+        stage.toBack(); // Send it to the back
+    }
+
 
     private static void sendPaymentResponse(String response, Double finalAmount, String code) {
+        sendPrimaryStageToBack();
         try {
             System.out.println("Sending payment response: " + response );
             out.writeObject("RESEND_PAYMENTRESPONSE " +response + " " + finalAmount + " "+ code);
             out.flush();
+            bancontactViewController.reSetMontant();
         } catch (IOException e) {
             e.printStackTrace();
         }

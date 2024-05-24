@@ -54,10 +54,10 @@ public class CentralServer {
             try {
                 while (true) {
                     Object message = in.readObject();
-                    if (message instanceof String) {
-                        String command = (String) message;
+                    if (message instanceof String command) {
                         if (command.equals("GET_FILMS")) {
                             sendFilms();
+                            System.out.println("Films sent to the client");
                         } else if (command.startsWith("SEND_PAYMENT")) {
                             sendPaymentToTerminal(command);
                             System.out.println("reponse envoyer au terminal");
@@ -67,6 +67,7 @@ public class CentralServer {
 
                         } else if (command.equals("GET_TIQUETS")) {
                             sendTiquets();
+                            System.out.println("Films sent to the client");
                         }
                     }
                 }

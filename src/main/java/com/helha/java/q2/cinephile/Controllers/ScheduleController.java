@@ -23,17 +23,6 @@ public class ScheduleController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/helha/java/q2/cinephile/SchedulePage.fxml"));
             Parent root = loader.load();
-            ScheduleViewController scheduleController = loader.getController();
-            scheduleController.setListener(new ScheduleViewController.NavListener() {
-                @Override
-                public void openCheckoutPage(String selectedRoom,String selectedHour) {
-                    CheckoutController.openCheckout(film, selectedRoom , selectedHour);
-                    System.out.println(selectedRoom);
-                    System.out.println(selectedHour);
-                }
-            });
-            scheduleController.setFilm(film);
-
             // Créez une nouvelle scène avec la racine chargée
             Scene newScene = new Scene(root);
 
@@ -43,10 +32,21 @@ public class ScheduleController {
             newStage.setWidth(1150);
             newStage.setHeight(800);
             newStage.show();
+            scheduleView = loader.getController();
+            scheduleView.setListener(new ScheduleViewController.NavListener() {
+                @Override
+                public void openCheckoutPage(String selectedRoom,String selectedHour) {
+                    CheckoutController.openCheckout(film, selectedRoom , selectedHour,newStage);
+                    System.out.println(selectedRoom);
+                    System.out.println(selectedHour);
+                }
+            });
+            scheduleView.setFilm(film);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 
 
 }

@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 public class ScheduleViewController {
 
@@ -162,7 +163,7 @@ public class ScheduleViewController {
     public interface NavListener {
 
 
-        void openCheckoutPage(String selectedRoom,String selectedHour);
+        void openCheckoutPage(String selectedRoom, String selectedHour);
     }
 
 

@@ -17,31 +17,32 @@ import java.sql.SQLException;
 public class CheckoutController {
     static CheckoutViewController checkoutViewController;
 
-    public static void openCheckout(Film film, String room, String hour) {
+    public static void openCheckout(Film film, String room, String hour,Stage shedulePageStage) {
         try {
             FXMLLoader loader = new FXMLLoader(CheckoutController.class.getResource("/com/helha/java/q2/cinephile/checkout.fxml"));
             Parent root = loader.load();
-            checkoutViewController = loader.getController();
-            checkoutViewController.setListener(prix -> {
-                System.out.println("room: "+room + " hour: "+hour);
-                startClient(prix, film, room, hour);
-            });
+
 
             // Obtient la scène actuelle
             Scene newScene = new Scene(root);
 
             // Créez un nouveau stage pour la nouvelle scène
-            Stage newStage = new Stage();
-            newStage.setScene(newScene);
-            newStage.setWidth(875);
-            newStage.setHeight(800);
-            newStage.show();
+            Stage checkoutPageStage = new Stage();
+            checkoutPageStage.setScene(newScene);
+            checkoutPageStage.setWidth(875);
+            checkoutPageStage.setHeight(800);
+            checkoutPageStage.show();
+            checkoutViewController = loader.getController();
+            checkoutViewController.setListener(prix -> {
+                System.out.println("room: "+room + " hour: "+hour);
+                startClient(prix, film, room, hour, checkoutPageStage, shedulePageStage);
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private static void startClient(Double prix, Film film, String room, String hour) {
+    private static void startClient(Double prix, Film film, String room, String hour, Stage checkoutPageStage, Stage shedulePageStage) {
         String serverAddress = "127.0.0.1"; // Adresse IP du serveur (localhost)
         int serverPort = 12345; // Port utilisé par le serveur
         try (
@@ -76,8 +77,13 @@ public class CheckoutController {
                         System.out.println("Nombre de tiquet: " + nombreDeTiquet);
                         FilmController.connectToServer();
                         FilmController.loadTiquets();
+                        FilmController.connectToServer();
+                        FilmController.loadFilms();
+                        System.out.println("rechargement historique");
                         // Fermer la communication après avoir reçu la réponse attendue
                         responseReceived = true;
+                        checkoutPageStage.close();
+                        shedulePageStage.close();
                     } else if (command.startsWith("PaymentRejected")) {
                         System.out.println("le client a refusé la commande");
                         responseReceived = true;

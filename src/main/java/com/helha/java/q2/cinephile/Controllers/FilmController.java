@@ -62,12 +62,13 @@ public class FilmController {
             e.printStackTrace();
         }
     }
-    private void loadFilms() {
+    static void loadFilms() {
         try {
             out.writeObject("GET_FILMS");
             out.flush();
             List<Film> films = (List<Film>) in.readObject();
             filmView.displayFilms(films);
+            System.out.println(films.size());
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         } catch (URISyntaxException e) {
@@ -80,6 +81,20 @@ public class FilmController {
             out.writeObject("GET_TIQUETS");
             out.flush();
             List<Tiquet> tiquets = null;
+            tiquets = (List<Tiquet>) in.readObject();
+            filmView.displayTiquets(tiquets);
+            System.out.println(tiquets.size());
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void reloadData(String command) {
+        try {
+            out.writeObject("GET_DATA");
+            out.flush();
+            String[] parts = command.split(" ");
+            List<Tiquet> tiquets = null;
+
             tiquets = (List<Tiquet>) in.readObject();
             filmView.displayTiquets(tiquets);
         } catch (IOException | ClassNotFoundException e) {

@@ -76,9 +76,30 @@
                                 <Font size="24.0" />
                             </font>
                         </ToggleButton>
-                        <Label fx:id="ticketsRoom1" layoutX="400.0" layoutY="109.0" mnemonicParsing="false" style="-fx-background-color: #aab0ad; -fx-background-radius: 20;" ></Label>
-                        <Label fx:id="ticketsRoom2" layoutX="400.0" layoutY="211.0" mnemonicParsing="false" style="-fx-background-color: #aab0ad; -fx-background-radius: 20;" ></Label>
-                        <Label fx:id="ticketsRoom3" layoutX="400.0" layoutY="317.0" mnemonicParsing="false" style="-fx-background-color: #aab0ad; -fx-background-radius: 20;" ></Label>
+                        <Label fx:id="ticketsRoom1" layoutX="600.0" layoutY="109.0" mnemonicParsing="false" style="-fx-background-color: #af0a0a; -fx-background-radius: 20; -fx-text-fill: white;" >
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                            <padding>
+                                <Insets  right="10"  left="10"/>
+                            </padding>
+                        </Label>
+                        <Label fx:id="ticketsRoom2" layoutX="600.0" layoutY="211.0" mnemonicParsing="false" style="-fx-background-color: #af0a0a; -fx-background-radius: 20; -fx-text-fill: white;" >
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                            <padding>
+                                <Insets  right="10"  left="10"/>
+                            </padding>
+                        </Label>
+                        <Label fx:id="ticketsRoom3" layoutX="600.0" layoutY="317.0" mnemonicParsing="false" style="-fx-background-color: #af0a0a; -fx-background-radius: 20; -fx-text-fill: white;" >
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                            <padding>
+                                <Insets  right="10"  left="10"/>
+                            </padding>
+                        </Label>
 
                     </children>
                 </AnchorPane>
@@ -96,7 +117,6 @@
                         <Line endX="400.0" layoutX="10.0" layoutY="70.0" stroke="#009688" strokeWidth="0.6" />
                         <Line endX="400.0" layoutX="10.0" layoutY="110.0" stroke="#009688" strokeWidth="0.6" />
                         <Line endX="400.0" layoutX="10.0" layoutY="150.0" stroke="#009688" strokeWidth="0.6" />
-                        <Line endX="400.0" layoutX="10.0" layoutY="190.0" stroke="#009688" strokeWidth="0.6" />
                         <Label layoutX="20.0" layoutY="46.0" text="IMDB Note">
                             <font>
                                 <Font size="14.0" />
@@ -128,24 +148,20 @@
                                 <Font size="14.0" />
                             </font>
                         </Label>
-                        <Label fx:id="movieticketsold" layoutX="250.0" layoutY="166.0" text="105">
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                        </Label>
+
                     </AnchorPane>
 
-                        <Label fx:id="moviesynopsis" alignment="TOP_LEFT" graphicTextGap="20.0" layoutX="710.0" layoutY="20.0" prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: #0e8585; -fx-background-radius: 5;" textFill="WHITE" wrapText="true">
-                            <padding>
-                                <Insets top="10" right="10" bottom="10" left="10"/>
-                            </padding>
-                            <font>
-                                <Font size="16.0" />
-                            </font>
-                            <cursor>
-                                <Cursor fx:constant="HAND" />
-                            </cursor>
-                        </Label>
+                    <Label fx:id="moviesynopsis" alignment="TOP_LEFT" graphicTextGap="20.0" layoutX="710.0" layoutY="20.0" prefHeight="200.0" prefWidth="250.0" style="-fx-background-color: #0e8585; -fx-background-radius: 5;" textFill="WHITE" wrapText="true">
+                        <padding>
+                            <Insets top="10" right="10" bottom="10" left="10"/>
+                        </padding>
+                        <font>
+                            <Font size="16.0" />
+                        </font>
+                        <cursor>
+                            <Cursor fx:constant="HAND" />
+                        </cursor>
+                    </Label>
 
 
                 </AnchorPane>
@@ -161,6 +177,3 @@
         </AnchorPane>
     </children>
 </AnchorPane>
-
-
-
